@@ -110,9 +110,7 @@ Here's how the normalization works:
 1. **Identify Extremes**: For each metric, find the maximum and minimum values across all hosts.
 2. **Normalize**: Use the following formula to scale each subscore:
 
-\[
-\text{Normalized Score} = \frac{{\text{Actual Score} - \text{Min Score}}}{{\text{Max Score} - \text{Min Score}}} \times 100
-\]
+`Normalized Score = ((Actual Score - Min Score) / (Max Score - Min Score)) * 100`
 
 If the Min Score and Max Score for a metric are the same (indicating no variation among the hosts), the normalized score is set to 100 for all hosts.
 
@@ -123,8 +121,8 @@ This approach ensures that the highest-performing host for each metric will have
 Suppose we have two hosts, A and B, and their `cpu_speed_test__events_per_second` scores are 950 and 1050, respectively.
 
 1. Max Score = 1050, Min Score = 950
-2. For Host A: \( \frac{{950 - 950}}{{1050 - 950}} \times 100 = 0 \)
-3. For Host B: \( \frac{{1050 - 950}}{{1050 - 950}} \times 100 = 100 \)
+2. For Host A: `((950 - 950) / (1050 - 950)) * 100 = 0`
+3. For Host B: `((1050 - 950) / (1050 - 950)) * 100 = 100`
 
 Host A will have a normalized CPU score of 0, and Host B will have a score of 100, indicating that Host B is relatively more powerful for this specific metric.
 
