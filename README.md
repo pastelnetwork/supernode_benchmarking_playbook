@@ -31,8 +31,8 @@ sudo apt install ansible
 ### Clone This Repository
 
 ```bash
-git clone <repository_url>
-cd <repository_name>
+git clone https://github.com/pastelnetwork/supernode_benchmarking_playbook
+cd supernode_benchmarking_playbook
 ```
 
 ### Update Ansible Inventory File
