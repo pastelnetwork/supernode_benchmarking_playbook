@@ -88,7 +88,27 @@ async def generate_benchmark_charts(db: Session):
     overall_df['datetime'] = pd.to_datetime(overall_df['datetime'])
     overall_fig = px.line(overall_df, x='datetime', y='overall_score', color='hostname',
                         labels={'overall_score': 'Overall Score', 'datetime': 'Datetime', 'hostname': 'Machine'},
-                        title='Overall Normalized Scores Over Time', markers=True)
+                        title='Overall Normalized Scores Over Time', markers=True, line_shape='spline')
     
     logger.info("Benchmark charts generated successfully.")
-    return HTMLResponse(content=f'<div>{overall_fig.to_html(full_html=False)}</div><div>{subscore_fig.to_html(full_html=False)}</div>')
+
+    # Make the background of the plotting area and paper transparent
+    subscore_fig.update_layout(
+        plot_bgcolor='rgba(255,255,255,0.15)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+    overall_fig.update_layout(
+        plot_bgcolor='rgba(255,255,255,0.15)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+
+    # Update your HTML content string
+    html_content_string = f'''
+    <div style="background: linear-gradient(to right, #0f2027, #203a43, #2c5364); padding: 20px;">
+        <div style="background-image: linear-gradient(to bottom, #bbd2c5, #536976); border-radius: 15px; margin-bottom: 20px;">{overall_fig.to_html(full_html=False)}</div>
+        <div style="background-image: linear-gradient(to bottom, #FAACA8, #DDD6F3); border-radius: 15px;">{subscore_fig.to_html(full_html=False)}</div>
+    </div>
+    '''
+
+    return HTMLResponse(content=html_content_string)
+
