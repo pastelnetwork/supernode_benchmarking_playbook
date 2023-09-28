@@ -13,6 +13,7 @@ warnings.filterwarnings('ignore', 'The behavior of DatetimeProperties.to_pydatet
 logger = setup_logger()
 MAX_DATA_POINTS_FOR_CHART = config("MAX_DATA_POINTS_FOR_CHART", cast=int)
 
+
 async def generate_benchmark_charts(db: Session):
     logger.info("Generating benchmark charts.")
     
@@ -61,7 +62,7 @@ async def generate_benchmark_charts(db: Session):
             dict(
                 buttons=buttons_by_metric,
                 direction="down",
-                pad={"r": 10, "t": 10},
+                pad={"r": 10, "t": 10, "l": 50},  # Added "l": 50 to make the dropdown wider
                 showactive=True,
                 x=0.1,
                 xanchor="left",
@@ -73,14 +74,14 @@ async def generate_benchmark_charts(db: Session):
                 direction="down",
                 pad={"r": 10, "t": 10},
                 showactive=True,
-                x=0.2,
+                x=0.4,
                 xanchor="left",
                 y=1.1,
                 yanchor="top"
             )
         ]
     )
-    
+
     overall_stats = db.query(OverallNormalizedScore).order_by(OverallNormalizedScore.datetime.desc()).limit(MAX_DATA_POINTS_FOR_CHART).all()
     overall_stats_dict = [{column.name: getattr(s, column.name) for column in OverallNormalizedScore.__table__.columns} for s in overall_stats]
     overall_df = pd.DataFrame(overall_stats_dict)
