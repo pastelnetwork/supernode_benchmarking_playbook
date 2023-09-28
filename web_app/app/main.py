@@ -9,7 +9,7 @@ logger = setup_logger()
 description_string = """
 ☁️🏆🚀 Cloud Benchmarker is your One-Stop-Shop to Quickly and Conveniently Test the Performance of Your Cloud Instances and Track It Over Time 🚀🏆☁️
 """
-app = FastAPI(title="Cloud Benchmarker", description=description_string)
+app = FastAPI(title="Cloud Benchmarker", description=description_string, version="1.0.0", docs_url="/")
 
 app.include_router(api_router)
 
